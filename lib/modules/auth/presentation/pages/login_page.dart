@@ -1,67 +1,88 @@
-import 'package:app_smart_wallet_ifpr/modules/auth/presentation/controllers/auth_controller.dart';
-import 'package:app_smart_wallet_ifpr/modules/auth/presentation/controllers/login_controller.dart';
-import 'package:app_smart_wallet_ifpr/modules/auth/presentation/widgets/login_form.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import '../widgets/login_form.dart';
 
-class LoginPage extends StatefulWidget {
+class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
-}
-
-class _LoginPageState extends State<LoginPage> {
-  late final TextEditingController raController;
-  late final TextEditingController passwordController;
-
-  @override
-  void initState() {
-    super.initState();
-    raController = TextEditingController();
-    passwordController = TextEditingController();
-  }
-
-  @override
-  void dispose() {
-    raController.dispose();
-    passwordController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    final loginController = Provider.of<LoginController>(context);
-    final authController = Provider.of<AuthController>(context, listen: false);
-
     return Scaffold(
-      appBar: AppBar(title: const Text('Login')),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child:
-            loginController.isLoading
-                ? const Center(child: CircularProgressIndicator())
-                : LoginForm(
-                  raController: raController,
-                  passwordController: passwordController,
-                  onSubmit: () async {
-                    final success = await loginController.login(
-                      raController.text,
-                      passwordController.text,
-                    );
-
-                    if (!mounted) return;
-
-                    if (success) {
-                      await authController.login();
-                      return;
-                    }
-
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Falha no login')),
-                    );
-                  },
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            transform: GradientRotation(135 * 3.1416 / 180),
+            colors: [Color(0xFF2B7A78), Color(0xFF17252A)],
+          ),
+        ),
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            return SingleChildScrollView(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(minHeight: constraints.maxHeight),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 24.0,
+                    vertical: 48,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        'assets/images/reitoria-horizontal-4-logocolorida-letrabranca.png',
+                        width: MediaQuery.of(context).size.width,
+                        fit: BoxFit.contain,
+                      ),
+                      const SizedBox(height: 40),
+                      Container(
+                        padding: const EdgeInsets.all(24),
+                        decoration: BoxDecoration(
+                          color: Color.fromARGB(20, 255, 255, 255),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            const Text(
+                              'Login',
+                              style: TextStyle(
+                                fontSize: 26,
+                                fontWeight: FontWeight.bold,
+                                color: Color.fromARGB(255, 255, 255, 255),
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            const Text(
+                              'Acesse ao Smart Wallet IFPR:',
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Color.fromARGB(255, 255, 255, 255),
+                              ),
+                            ),
+                            const SizedBox(height: 24),
+                            const LoginForm(),
+                            const SizedBox(height: 12),
+                            TextButton(
+                              onPressed: () {
+                                // TODO - Recuperar senha
+                              },
+                              child: const Text(
+                                'Esqueceu ou deseja alterar sua senha?',
+                                style: TextStyle(color: Colors.white60),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 32),
+                    ],
+                  ),
                 ),
+              ),
+            );
+          },
+        ),
       ),
     );
   }
