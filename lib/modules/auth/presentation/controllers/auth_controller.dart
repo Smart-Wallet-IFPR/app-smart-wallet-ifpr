@@ -6,19 +6,17 @@ class AuthController extends ChangeNotifier {
   bool get isLoggedIn => _isLoggedIn;
 
   Future<void> checkLoginStatus() async {
-    // TODO -> Deixar simulando fake a validação de token
+    // TODO -> Criar lógica para verificar se o Token é válido.
     await Future.delayed(const Duration(seconds: 1));
-    //TODO -> Aqui você validaria token salvo no SharedPreferences ou SecureStorage
-    _isLoggedIn = false; // ou true se estiver logado
+    _isLoggedIn = false;
+  }
+
+  void setLoggedIn(bool value) {
+    _isLoggedIn = value;
     notifyListeners();
   }
 
-  Future<void> login() async {
-    _isLoggedIn = true;
-    notifyListeners();
-  }
-
-  Future<void> logout() async {
+  void logout() {
     _isLoggedIn = false;
     notifyListeners();
   }
