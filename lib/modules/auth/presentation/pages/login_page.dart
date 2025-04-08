@@ -1,3 +1,4 @@
+import 'package:app_smart_wallet_ifpr/shared/constants/app_colors.dart';
 import 'package:flutter/material.dart';
 import '../widgets/login_form.dart';
 
@@ -13,7 +14,7 @@ class LoginPage extends StatelessWidget {
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             transform: GradientRotation(135 * 3.1416 / 180),
-            colors: [Color(0xFF2B7A78), Color(0xFF17252A)],
+            colors: [AppColors.loginSecondary, AppColors.loginBlack],
           ),
         ),
         child: LayoutBuilder(
