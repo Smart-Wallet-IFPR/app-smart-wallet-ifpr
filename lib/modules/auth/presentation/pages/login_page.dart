@@ -48,7 +48,7 @@ class LoginPage extends StatelessWidget {
                             const Text(
                               'Login',
                               style: TextStyle(
-                                fontSize: 26,
+                                fontSize: 32,
                                 fontWeight: FontWeight.bold,
                                 color: Color.fromARGB(255, 255, 255, 255),
                               ),
@@ -57,7 +57,7 @@ class LoginPage extends StatelessWidget {
                             const Text(
                               'Acesse ao Smart Wallet IFPR:',
                               style: TextStyle(
-                                fontSize: 16,
+                                fontSize: 24,
                                 color: Color.fromARGB(255, 255, 255, 255),
                               ),
                             ),
@@ -70,7 +70,10 @@ class LoginPage extends StatelessWidget {
                               },
                               child: const Text(
                                 'Esqueceu ou deseja alterar sua senha?',
-                                style: TextStyle(color: Colors.white60),
+                                style: TextStyle(
+                                    color: Colors.white60,
+                                    fontSize: 16
+                                ),
                               ),
                             ),
                           ],
