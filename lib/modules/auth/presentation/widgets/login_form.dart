@@ -85,7 +85,8 @@ class _LoginFormState extends State<LoginForm> {
                 'Registro Acadêmico',
                 style: TextStyle(
                   color: Colors.white,
-                  fontWeight: FontWeight.w600,
+                  fontWeight: FontWeight.w400,
+                  fontSize: 24,
                 ),
               ),
               const SizedBox(height: 6),
@@ -125,7 +126,8 @@ class _LoginFormState extends State<LoginForm> {
                 'Senha',
                 style: TextStyle(
                   color: Colors.white,
-                  fontWeight: FontWeight.w600,
+                  fontWeight: FontWeight.w400,
+                  fontSize: 24,
                 ),
               ),
               const SizedBox(height: 6),
@@ -188,8 +190,8 @@ class _LoginFormState extends State<LoginForm> {
               child:
                   _isLoading
                       ? const SizedBox(
-                        width: 24,
-                        height: 24,
+                        width: 32,
+                        height: 32,
                         child: CircularProgressIndicator(
                           strokeWidth: 2,
                           valueColor: AlwaysStoppedAnimation<Color>(
@@ -197,7 +199,14 @@ class _LoginFormState extends State<LoginForm> {
                           ),
                         ),
                       )
-                      : const Text('Acessar', style: TextStyle(fontSize: 16)),
+                      : const Text(
+                      'Acessar',
+                      style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.w600,
+                      ),
+
+                  ),
             ),
           ),
         ],
