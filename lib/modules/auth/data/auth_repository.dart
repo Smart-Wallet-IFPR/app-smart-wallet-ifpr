@@ -1,48 +1,35 @@
-import 'dart:convert';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 
+import '../../../core/models/auth/auth_request_model.dart';
+import '../../../core/models/auth/auth_response_model.dart';
+import '../../../shared/constants/api_constants.dart';
+
 class AuthRepository {
+  final http.Client client;
+  final storage = FlutterSecureStorage();
+
+  AuthRepository({required this.client});
+
   Future<bool> login(String ra, String password) async {
-    const url = 'https://suap.ifpr.edu.br/api/token/pair';
+    const url = ApiConstants.urlLoginSuap;
 
-    final headers = {
-      'accept': 'application/json',
-      'Content-Type': 'application/json',
-      'User-Agent': 'Mozilla/5.0 (compatible; FlutterApp/1.0)',
-    };
+    final payload = AuthRequestModel(ra: ra, password: password).toJson();
 
-    final body = jsonEncode({
-      'username': ra,
-      'password': password,
-    });
+    final response = await client.post(
+      Uri.parse(url),
+      body: payload,
+    );
 
-    try {
-      final response = await http.post(
-        Uri.parse(url),
-        headers: headers,
-        body: body,
-      );
-
-      if (response.statusCode == 200) {
-        final json = jsonDecode(response.body);
-        final access = json['access'];
-        final refresh = json['refresh'];
-
-        // TODO -> Realizando testes, será removido.
-        // print('Access Token: $access');
-        // print('Refresh Token: $refresh');
-
-        return true;
-      } else {
-        // TODO -> Realizando testes, será removido.
-        // print('Erro de login: ${response.statusCode}');
-        // print(response.body);
-        return false;
-      }
-    } catch (e) {
-      // TODO -> Realizando testes, será removido.
-      // print('Erro de requisição: $e');
+    if (response.statusCode != 200) {
       return false;
     }
+
+    final authResponse = AuthResponseModel.fromJson(response.body);
+
+    await storage.write(key: 'access_token', value: authResponse.access);
+    await storage.write(key: 'refresh_token', value: authResponse.refresh);
+
+    return true;
   }
 }
