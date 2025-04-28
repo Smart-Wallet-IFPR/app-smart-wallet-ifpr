@@ -1,4 +1,5 @@
 import 'package:app_smart_wallet_ifpr/core/routes/app_routes.dart';
+import 'package:app_smart_wallet_ifpr/core/widgets/sidebar.dart';
 import 'package:app_smart_wallet_ifpr/modules/auth/presentation/controllers/auth_controller.dart';
 import 'package:app_smart_wallet_ifpr/modules/auth/presentation/pages/login_page.dart';
 import 'package:app_smart_wallet_ifpr/modules/home/home_page.dart';
@@ -40,7 +41,7 @@ class _AppWidgetState extends State<AppWidget> {
           home:
               authController.isLoggedIn ? const HomePage() : const LoginPage(),
           routes: {
-            AppRoutes.home: (_) => const HomePage(),
+            AppRoutes.home: (_) => const Sidebar(child: HomePage()),
             AppRoutes.login: (_) => const LoginPage(),
           },
         );
