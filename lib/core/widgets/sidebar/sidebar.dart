@@ -1,4 +1,8 @@
+import 'package:app_smart_wallet_ifpr/core/widgets/sidebar/sidebar_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../../../shared/constants/app_colors.dart';
 
 class Sidebar extends StatefulWidget {
   final Widget child;
@@ -27,7 +31,7 @@ class SidebarState extends State<Sidebar> {
               left: 0,
               width: 200,
               child: Container(
-                color: Colors.blueGrey[900],
+                color: AppColors.loginSecondary,
                 child: Column(
                   children: [
                     Container(
@@ -55,17 +59,11 @@ class SidebarState extends State<Sidebar> {
                             },
                           ),
                           _buildMenuItem(
-                            icon: Icons.person,
-                            label: "Perfil",
+                            icon: Icons.credit_card,
+                            label: "Carteira",
                             onTap: () {
-                              Navigator.pushReplacementNamed(context, '/profile');
-                            },
-                          ),
-                          _buildMenuItem(
-                            icon: Icons.settings,
-                            label: "Configurações",
-                            onTap: () {
-                              Navigator.pushReplacementNamed(context, '/settings');
+                              // TODO
+                              // Redirecionar a widget com as infos do aluno.
                             },
                           ),
                         ],
@@ -75,6 +73,11 @@ class SidebarState extends State<Sidebar> {
                       icon: Icons.logout,
                       label: "Sair",
                       onTap: () {
+                        final sidebarController = Provider.of<SidebarController>(
+                          context,
+                          listen: false,
+                        );
+                        sidebarController.logout();
                         Navigator.pushReplacementNamed(context, '/login');
                       },
                     ),
@@ -89,7 +92,7 @@ class SidebarState extends State<Sidebar> {
               visible: !isSidebarVisible,
               child: FloatingActionButton(
                 mini: true,
-                backgroundColor: Colors.blueGrey[900],
+                backgroundColor: AppColors.loginSecondary,
                 onPressed: () {
                   setState(() {
                     isSidebarVisible = true;

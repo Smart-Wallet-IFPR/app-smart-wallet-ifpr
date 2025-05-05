@@ -32,4 +32,9 @@ class AuthRepository {
 
     return true;
   }
+
+  Future<void> logout() async {
+    await storage.delete(key: 'access_token');
+    await storage.delete(key: 'refresh_token');
+  }
 }
