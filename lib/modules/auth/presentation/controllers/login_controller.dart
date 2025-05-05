@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import '../../domain/usecases/login_usecase.dart';
+import '../../domain/usecases/authentication_usecase.dart';
 
 class LoginController extends ChangeNotifier {
-  final LoginUseCase loginUseCase;
+  final AuthenticationUseCase authUseCase;
 
-  LoginController(this.loginUseCase);
+  LoginController(this.authUseCase);
 
   bool isLoading = false;
   String? errorMessage;
@@ -14,7 +14,7 @@ class LoginController extends ChangeNotifier {
     notifyListeners();
 
     try {
-      final result = await loginUseCase.execute(ra, password);
+      final result = await authUseCase.execute(ra, password);
       return result;
     } catch (e) {
       errorMessage = 'Erro ao fazer login';

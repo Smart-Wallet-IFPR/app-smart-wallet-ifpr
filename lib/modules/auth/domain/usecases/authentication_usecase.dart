@@ -1,11 +1,15 @@
 import '../../data/auth_repository.dart';
 
-class LoginUseCase {
+class AuthenticationUseCase {
   final AuthRepository repository;
 
-  LoginUseCase(this.repository);
+  AuthenticationUseCase(this.repository);
 
   Future<bool> execute(String ra, String password) async {
     return await repository.login(ra, password);
+  }
+
+  Future<void> logout() async {
+    return await repository.logout();
   }
 }
