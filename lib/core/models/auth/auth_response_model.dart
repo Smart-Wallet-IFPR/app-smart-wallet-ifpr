@@ -1,23 +1,61 @@
-import 'dart:convert';
-
 class AuthResponseModel {
-  final String username;
-  final String access;
-  final String refresh;
+  final String email;
+  final String nome;
+  final List<AlunoTurma> alunoTurma;
 
   AuthResponseModel({
-    required this.username,
-    required this.access,
-    required this.refresh,
+    required this.email,
+    required this.nome,
+    required this.alunoTurma,
   });
 
-  factory AuthResponseModel.fromJson(String json) {
-    final data = jsonDecode(json);
-
+  factory AuthResponseModel.fromJson(Map<String, dynamic> json) {
     return AuthResponseModel(
-      username: data['username'],
-      access: data['access'],
-      refresh: data['refresh'],
+      email: json['email'],
+      nome: json['nome'],
+      alunoTurma: (json['alunoTurma'] as List)
+          .map((e) => AlunoTurma.fromJson(e))
+          .toList(),
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'email': email,
+      'nome': nome,
+      'alunoTurma': alunoTurma.map((e) => e.toJson()).toList(),
+    };
+  }
+}
+
+class AlunoTurma {
+  final String curso;
+  final DateTime dataMatricula;
+  final String ra;
+  final String turma;
+
+  AlunoTurma({
+    required this.curso,
+    required this.dataMatricula,
+    required this.ra,
+    required this.turma,
+  });
+
+  factory AlunoTurma.fromJson(Map<String, dynamic> json) {
+    return AlunoTurma(
+      curso: json['curso'],
+      dataMatricula: DateTime.parse(json['dataMatricula']),
+      ra: json['ra'],
+      turma: json['turma'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'curso': curso,
+      'dataMatricula': dataMatricula.toIso8601String(),
+      'ra': ra,
+      'turma': turma,
+    };
   }
 }
