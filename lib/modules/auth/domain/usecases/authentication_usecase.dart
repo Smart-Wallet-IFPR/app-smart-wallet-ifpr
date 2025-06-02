@@ -1,4 +1,4 @@
-import '../../data/auth_repository.dart';
+import '../../data/repositories/auth_repository.dart';
 
 class AuthenticationUseCase {
   final AuthRepository repository;

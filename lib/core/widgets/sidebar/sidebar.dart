@@ -1,8 +1,10 @@
 import 'package:app_smart_wallet_ifpr/core/widgets/sidebar/sidebar_controller.dart';
+import 'package:app_smart_wallet_ifpr/shared/constants/sidebar_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../shared/constants/app_colors.dart';
+import '../../routes/app_routes.dart';
 
 class Sidebar extends StatefulWidget {
   final Widget child;
@@ -21,12 +23,30 @@ class SidebarState extends State<Sidebar> {
     return Scaffold(
       body: Stack(
         children: [
-          Positioned.fill(
-            child: widget.child,
+          Positioned.fill(child: widget.child),
+          Positioned(
+            top: 0,
+            left: 0,
+            right: 0,
+            child: Container(
+              height: 56,
+              color: AppColors.loginSecondary,
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              alignment: Alignment.centerLeft,
+              child: IconButton(
+                icon: const Icon(Icons.menu, color: Colors.white),
+                onPressed: () {
+                  setState(() {
+                    isSidebarVisible = !isSidebarVisible;
+                  });
+                },
+              ),
+            ),
           ),
+
           if (isSidebarVisible)
             Positioned(
-              top: 0,
+              top: 56,
               bottom: 0,
               left: 0,
               width: 200,
@@ -34,36 +54,40 @@ class SidebarState extends State<Sidebar> {
                 color: AppColors.loginSecondary,
                 child: Column(
                   children: [
-                    Container(
-                      padding: const EdgeInsets.all(8),
-                      alignment: Alignment.centerLeft,
-                      child: IconButton(
-                        icon: const Icon(Icons.menu, color: Colors.white),
-                        onPressed: () {
-                          setState(() {
-                            isSidebarVisible = false;
-                          });
-                        },
-                      ),
-                    ),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 16),
                     Expanded(
                       child: ListView(
                         padding: EdgeInsets.zero,
                         children: [
                           _buildMenuItem(
                             icon: Icons.home,
-                            label: "Home",
+                            label: SidebarConstants.menuHome,
                             onTap: () {
-                              Navigator.pushReplacementNamed(context, '/home');
+                              Navigator.pushReplacementNamed(
+                                context,
+                                AppRoutes.home,
+                              );
                             },
                           ),
                           _buildMenuItem(
                             icon: Icons.credit_card,
-                            label: "Carteira",
+                            label: SidebarConstants.menuWallet,
                             onTap: () {
-                              // TODO
-                              // Redirecionar a widget com as infos do aluno.
+                              // TODO -> Criar componente
+                              Navigator.pushReplacementNamed(
+                                context,
+                                AppRoutes.home,
+                              );
+                            },
+                          ),
+                          _buildMenuItem(
+                            icon: Icons.credit_card,
+                            label: SidebarConstants.requestWallet,
+                            onTap: () {
+                              Navigator.pushReplacementNamed(
+                                context,
+                                AppRoutes.requestWallet,
+                              );
                             },
                           ),
                         ],
@@ -71,37 +95,24 @@ class SidebarState extends State<Sidebar> {
                     ),
                     _buildMenuItem(
                       icon: Icons.logout,
-                      label: "Sair",
+                      label: SidebarConstants.logout,
                       onTap: () {
-                        final sidebarController = Provider.of<SidebarController>(
-                          context,
-                          listen: false,
-                        );
+                        final sidebarController =
+                            Provider.of<SidebarController>(
+                              context,
+                              listen: false,
+                            );
                         sidebarController.logout();
-                        Navigator.pushReplacementNamed(context, '/login');
+                        Navigator.pushReplacementNamed(
+                          context,
+                          AppRoutes.login,
+                        );
                       },
                     ),
                   ],
                 ),
               ),
             ),
-          Positioned(
-            top: 16,
-            left: 16,
-            child: Visibility(
-              visible: !isSidebarVisible,
-              child: FloatingActionButton(
-                mini: true,
-                backgroundColor: AppColors.loginSecondary,
-                onPressed: () {
-                  setState(() {
-                    isSidebarVisible = true;
-                  });
-                },
-                child: const Icon(Icons.menu, color: Colors.white),
-              ),
-            ),
-          ),
         ],
       ),
     );

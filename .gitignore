@@ -80,3 +80,5 @@ linux/flutter/generated_plugins.cmake
 # Ignora arquivos gerados no macOS
 macos/Flutter/GeneratedPluginRegistrant.swift
 macos/Flutter/ephemeral/
+/linux
+/macos
