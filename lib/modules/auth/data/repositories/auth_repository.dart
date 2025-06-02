@@ -1,9 +1,9 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import '../../../core/models/auth/auth_request_model.dart';
-import '../../../core/models/auth/auth_response_model.dart';
-import '../../../shared/constants/api_constants.dart';
+import '../../../../core/models/auth/auth_request_model.dart';
+import '../../../../core/models/auth/auth_response_model.dart';
+import '../../../../shared/constants/api_constants.dart';
 
 class AuthRepository {
   final http.Client client;

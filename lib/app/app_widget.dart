@@ -3,6 +3,8 @@ import 'package:app_smart_wallet_ifpr/core/widgets/sidebar/sidebar.dart';
 import 'package:app_smart_wallet_ifpr/modules/auth/presentation/controllers/auth_controller.dart';
 import 'package:app_smart_wallet_ifpr/modules/auth/presentation/pages/login_page.dart';
 import 'package:app_smart_wallet_ifpr/modules/home/home_page.dart';
+import 'package:app_smart_wallet_ifpr/modules/request_wallet/presentation/pages/request_wallet_page.dart';
+import 'package:app_smart_wallet_ifpr/shared/constants/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -38,11 +40,20 @@ class _AppWidgetState extends State<AppWidget> {
 
         return MaterialApp(
           title: 'Smart Wallet IFPR',
+          theme: ThemeData(
+            inputDecorationTheme: InputDecorationTheme(
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: AppColors.loginSecondary),
+              ),
+              floatingLabelStyle: TextStyle(color: AppColors.loginSecondary),
+            ),
+          ),
           home:
               authController.isLoggedIn ? const HomePage() : const LoginPage(),
           routes: {
             AppRoutes.home: (_) => const Sidebar(child: HomePage()),
             AppRoutes.login: (_) => const LoginPage(),
+            AppRoutes.requestWallet: (_) => const Sidebar(child: RequestWalletPage()),
           },
         );
       },
