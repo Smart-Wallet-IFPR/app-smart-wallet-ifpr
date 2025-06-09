@@ -82,3 +82,7 @@ macos/Flutter/GeneratedPluginRegistrant.swift
 macos/Flutter/ephemeral/
 /linux
 /macos
+
+# Chave Play Store
+key.properties
+app/upload-keystore.jks

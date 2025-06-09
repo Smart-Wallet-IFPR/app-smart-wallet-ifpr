@@ -1,32 +1,28 @@
 import 'dart:convert';
 
 class AuthRequestModel {
-  final String email;
-  final String ra;
-  final String senha;
+  final String username;
+  final String password;
 
   AuthRequestModel({
-    required this.email,
-    required this.ra,
-    required this.senha,
+    required this.username,
+    required this.password,
   });
 
   factory AuthRequestModel.fromJson(String json) {
     final data = jsonDecode(json);
 
     return AuthRequestModel(
-      email: data['email'],
-      ra: data['ra'],
-      senha: data['senha'],
+      username: data['username'],
+      password: data['password'],
 
     );
   }
 
   String toJson() {
     return jsonEncode({
-      'email': email,
-      'ra': ra,
-      'senha': senha,
+      'username': username,
+      'password': password,
     });
   }
 }

@@ -12,30 +12,42 @@ class AuthRepository {
   AuthRepository({required this.client});
 
   Future<bool> login(String ra, String senha) async {
-    const url = ApiConstants.urlLoginCronos;
+    const url = ApiConstants.urlLoginSuap;
 
-    final payload = AuthRequestModel(
-        email: "lucasrachid@hotmail.com",
-        ra: ra,
-        senha: senha
-    ).toJson();
+    final payload = AuthRequestModel(username: ra, password: senha).toJson();
 
-    final response = await client.post(
-      Uri.parse(url),
-      body: payload,
-    );
+    final response = await client.post(Uri.parse(url), body: payload);
 
     if (response.statusCode != 200) {
       return false;
     }
 
-    final Map<String, dynamic> decodedJson = json.decode(response.body);
-    final authResponse = AuthResponseModel.fromJson(decodedJson);
+    final Map<String, dynamic> body = json.decode(response.body);
+    var accessToken = body["access"];
 
-    await storage.write(
-      key: 'authentication',
-      value: json.encode(authResponse.toJson()),
+    final responseAux = await client.get(
+      Uri.parse(
+        "https://suap.ifpr.edu.br/api/edu/dados-aluno-matriculado/?matricula=20210002150",
+      ),
+      headers: {
+        'User-Agent':
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+        'Authorization': 'Bearer $accessToken',
+        'accept': 'application/json',
+      },
     );
+
+    if (responseAux.statusCode != 200) {
+      return false;
+    }
+
+    // final Map<String, dynamic> decodedJson = json.decode(response.body);
+    // final authResponse = AuthResponseModel.fromJson(decodedJson);
+    //
+    // await storage.write(
+    //   key: 'authentication',
+    //   value: json.encode(authResponse.toJson()),
+    // );
 
     return true;
   }
